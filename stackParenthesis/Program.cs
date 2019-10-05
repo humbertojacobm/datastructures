@@ -23,125 +23,145 @@ namespace stackParenthesis
         //o,o,c,c,o,c,o,o,o,c,o,c,c,o,c,c
         //just possible to begin with "o" {([
         //just possible to finish with "c" })]
-        // ,,,,o,c,o,o,o,c,o,c,c,o,c,c
+        //always is pair
+        // ,,,,,,,,,,,,,,,
+        // ,,,,
 
 
         static void Main(string[] args)
         {
-            var expresion1 = "[()]{}{[()()]()}";
+            //var expresion1 = "[()]{}{[()()]()}";            
+            var expresion1 = "[(])";
+            bool isBalance = true;
 
             Console.WriteLine(expresion1);
 
-            bool isBalance = true;
+            isBalance = isBalancedExpression(expresion1);
 
-            char[] arrExpression = expresion1.ToCharArray();
-
-            LinkedList<string> justParenthesisFamily = new LinkedList<string>();
-            Stack mirrorParenthesisList = new Stack();
-
-            foreach (var item in arrExpression)
-            {
-                if (item == char.Parse("{") || item == char.Parse("}") || item == char.Parse("(") || item == char.Parse(")") || item == char.Parse("[") || item == char.Parse("]"))
-                {
-                    justParenthesisFamily.AddLast(item.ToString());
-                    mirrorParenthesisList.Push(item.ToString());
-                }
-            }
-
-            isBalance = (justParenthesisFamily.Count % 2) == 0;
-
-            if (isBalance)
-            {
-                foreach (var item in justParenthesisFamily.Take(justParenthesisFamily.Count / 2))
-                {
-                    var top = mirrorParenthesisList.Pop();
-
-                    switch (item)
-                    {
-                        case "{":
-                            isBalance = CheckingPair(top.ToString(), "}");
-                            break;
-                        case "}":
-                            isBalance = CheckingPair(top.ToString(), "{");
-                            break;
-                        case "(":
-                            isBalance = CheckingPair(top.ToString(), ")");
-                            break;
-                        case ")":
-                            isBalance = CheckingPair(top.ToString(), "(");
-                            break;
-                        case "[":
-                            isBalance = CheckingPair(top.ToString(), "]");
-                            break;
-                        case "]":
-                            isBalance = CheckingPair(top.ToString(), "[");
-                            break;
-                        default:
-                            break;
-                    }
-
-                    if (!isBalance)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Console.WriteLine("Is balance {0}", isBalance.ToString());
-
-            //Console.WriteLine();
+            Console.WriteLine("Es balanceada ?: "+ isBalance.ToString());
             //foreach (var item in justParenthesisFamily)
             //{
-
             //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine();
-            //foreach (var item in mirrorParenthesisList)
-            //{                
-            //    Console.WriteLine(item);
-            //}
-
-            //Stack s1 = new Stack();
-
-            //foreach (var item in arrExpression)
-            //{
-            //    s1.Push(item);
-            //    //{a(b[c]d)e}
-            //    //}e)d]c[b(a{
-            //}
-
-            ////o :  {
-            ////s1:  }
-            //var isBalanced = true;
-            //foreach (var item in arrExpression)
-            //{
-            //    var value = s1.Pop();
-
-            //    if(value == "}" || value == ")" || value == "]")
-            //    {
-            //        if ((value == "}" && value == item) || (value == ")" && value == item) || (value == "]" && value == item))
-            //        {
-            //            continue;
-            //        }
-            //        isBalanced = false;
-            //        break;
-            //    }                
             //}
 
             Console.ReadKey();
-
-
-
-
         }
 
-        private static bool CheckingPair(string top, string pair)
+        private static bool isBalancedExpression(string expression)
         {
-            if (top != pair)
+                  
+            List<char> parenthList = (expression.ToList()).Where(x => isOpenKey(x.ToString()) || isCloseKey(x.ToString())).ToList();
+            if (parenthList.Count%2!=0)
             {
                 return false;
             }
+            Queue<char> justParenthesisFamily = new Queue<char>(parenthList);
+            Stack<char> openParenth = new Stack<char>();
+            char first = justParenthesisFamily.Dequeue();
+            char last = justParenthesisFamily.Last();
+            if (!(isOpenKey(first.ToString()) && isCloseKey(last.ToString())))
+            {
+                return false;
+            }
+
+            openParenth.Push(first);
+
+            while(justParenthesisFamily.Count>0 || openParenth.Count>0)
+            {
+                var familyTop = justParenthesisFamily.Peek();
+                if (isCloseKey(familyTop.ToString()))
+                {                    
+                    if(isCoupleComparisson(openParenth.Peek().ToString(), familyTop.ToString()))
+                    {
+                        justParenthesisFamily.Dequeue();
+                        openParenth.Pop();                        
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    openParenth.Push(justParenthesisFamily.Dequeue());
+                }
+            }
+
+            if (justParenthesisFamily.Count > 0 || openParenth.Count > 0)
+            {
+                return false;
+            }
+            else
+
             return true;
+        }
+
+        private static bool isCoupleComparisson(string girlfriend, string boyfriend)
+        {
+            var isCouple = false;
+            switch (girlfriend)
+            {
+                case "{":
+                    if(boyfriend=="}")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "[":
+                    if (boyfriend == "]")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "(":
+                    if (boyfriend == ")")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return isCouple;
+        }
+
+        private static bool isOpenKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "{":
+                    isOpen = true;
+                    break;
+                case "[":
+                    isOpen = true;
+                    break;
+                case "(":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
+        }
+        private static bool isCloseKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "}":
+                    isOpen = true;
+                    break;
+                case "]":
+                    isOpen = true;
+                    break;
+                case ")":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
         }
     }
 }
