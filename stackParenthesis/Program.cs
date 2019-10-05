@@ -11,32 +11,24 @@ namespace stackParenthesis
     class Program
     {
 
-       
+        //   [,o
+        //   ],c
+        //   (,o
+        //   ), c
+        //   {, o
+        //   }, c
+
+        //[()]{}{[()()]()}
+        //clean de other letters.
+        //o,o,c,c,o,c,o,o,o,c,o,c,c,o,c,c
+        //just possible to begin with "o" {([
+        //just possible to finish with "c" })]
+        // ,,,,o,c,o,o,o,c,o,c,c,o,c,c
+
 
         static void Main(string[] args)
         {
-
-            // {([])} => balanced
-            //{ , ( , [ , ] , ), }
-
-            // { , ( , [
-            // ] , ), }
-
-            // { , ( , [
-            // } , ), ]
-
-            // queue { , ( , [
-            // Stack  } , ), ]
-
-
-            // {([])}
-            // })][({
-
-            // a{b(c[d]f)g}
-            // {([])}
-
-
-            var expresion1 = "{{([])}}";
+            var expresion1 = "[()]{}{[()()]()}";
 
             Console.WriteLine(expresion1);
 
@@ -49,45 +41,49 @@ namespace stackParenthesis
 
             foreach (var item in arrExpression)
             {
-
-                if(item == char.Parse("{") || item == char.Parse("}") || item == char.Parse("(") || item == char.Parse(")") || item == char.Parse("[") || item == char.Parse("]"))
+                if (item == char.Parse("{") || item == char.Parse("}") || item == char.Parse("(") || item == char.Parse(")") || item == char.Parse("[") || item == char.Parse("]"))
                 {
                     justParenthesisFamily.AddLast(item.ToString());
                     mirrorParenthesisList.Push(item.ToString());
                 }
             }
-            
-            foreach (var item in justParenthesisFamily.Take(justParenthesisFamily.Count/2))
-            {
-                var top = mirrorParenthesisList.Pop();
-                
-                switch (item)
-                {
-                    case "{":
-                        isBalance= CheckingPair(top.ToString(), "}");    
-                        break;
-                    case "}":
-                        isBalance = CheckingPair(top.ToString(), "{");
-                        break;
-                    case "(":
-                        isBalance = CheckingPair(top.ToString(), ")");
-                        break;
-                    case ")":
-                        isBalance = CheckingPair(top.ToString(), "(");
-                        break;
-                    case "[":
-                        isBalance = CheckingPair(top.ToString(), "]");
-                        break;
-                    case "]":
-                        isBalance = CheckingPair(top.ToString(), "[");
-                        break;
-                    default:
-                        break;
-                }
 
-                if (!isBalance)
+            isBalance = (justParenthesisFamily.Count % 2) == 0;
+
+            if (isBalance)
+            {
+                foreach (var item in justParenthesisFamily.Take(justParenthesisFamily.Count / 2))
                 {
-                    break;
+                    var top = mirrorParenthesisList.Pop();
+
+                    switch (item)
+                    {
+                        case "{":
+                            isBalance = CheckingPair(top.ToString(), "}");
+                            break;
+                        case "}":
+                            isBalance = CheckingPair(top.ToString(), "{");
+                            break;
+                        case "(":
+                            isBalance = CheckingPair(top.ToString(), ")");
+                            break;
+                        case ")":
+                            isBalance = CheckingPair(top.ToString(), "(");
+                            break;
+                        case "[":
+                            isBalance = CheckingPair(top.ToString(), "]");
+                            break;
+                        case "]":
+                            isBalance = CheckingPair(top.ToString(), "[");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (!isBalance)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -142,7 +138,7 @@ namespace stackParenthesis
         private static bool CheckingPair(string top, string pair)
         {
             if (top != pair)
-            {                
+            {
                 return false;
             }
             return true;
