@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionaries", "Dictionarie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stackParenthesis", "stackParenthesis\stackParenthesis.csproj", "{BA9AF87F-E320-45B0-B553-6586CCFFEEB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stackParenthesisFactory", "stackParenthesisFactory\stackParenthesisFactory.csproj", "{AA78467C-510C-4CD5-B1EC-C0CD8D68CF3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{BA9AF87F-E320-45B0-B553-6586CCFFEEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA9AF87F-E320-45B0-B553-6586CCFFEEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA9AF87F-E320-45B0-B553-6586CCFFEEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA78467C-510C-4CD5-B1EC-C0CD8D68CF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA78467C-510C-4CD5-B1EC-C0CD8D68CF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA78467C-510C-4CD5-B1EC-C0CD8D68CF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA78467C-510C-4CD5-B1EC-C0CD8D68CF3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
