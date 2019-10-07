@@ -7,26 +7,90 @@ using System.Threading.Tasks;
 namespace stackParenthesisFactory
 {
     public abstract class Checker
-    {
-        public abstract string type { get; }
+    {        
         public abstract string expression { get; set; }
         public abstract bool isBalanced { get; }
     }
 
-    public class HmoriChecker : Checker
+    public abstract class FirstChecker : Checker
     {
-        private readonly string _type;
-        private string _expression;        
+        public bool isCoupleComparisson(string girlfriend, string boyfriend)
+        {
+            var isCouple = false;
+            switch (girlfriend)
+            {
+                case "{":
+                    if (boyfriend == "}")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "[":
+                    if (boyfriend == "]")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "(":
+                    if (boyfriend == ")")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return isCouple;
+        }
+
+        public bool isOpenKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "{":
+                    isOpen = true;
+                    break;
+                case "[":
+                    isOpen = true;
+                    break;
+                case "(":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
+        }
+        public bool isCloseKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "}":
+                    isOpen = true;
+                    break;
+                case "]":
+                    isOpen = true;
+                    break;
+                case ")":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
+        }
+    }
+
+    public class HmoriChecker : FirstChecker
+    {
+
+        private string _expression;
 
         public HmoriChecker(string expression)
         {
-            this._type = "hmori";
-            this._expression = expression;            
-        }
-
-        public override string type
-        {
-            get { return this._type; }
+            this._expression = expression;
         }
 
         public override string expression
@@ -87,74 +151,6 @@ namespace stackParenthesisFactory
             else
 
                 return true;
-        }
-
-        private bool isCoupleComparisson(string girlfriend, string boyfriend)
-        {
-            var isCouple = false;
-            switch (girlfriend)
-            {
-                case "{":
-                    if (boyfriend == "}")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                case "[":
-                    if (boyfriend == "]")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                case "(":
-                    if (boyfriend == ")")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return isCouple;
-        }
-
-        private bool isOpenKey(string key)
-        {
-            var isOpen = false;
-            switch (key)
-            {
-                case "{":
-                    isOpen = true;
-                    break;
-                case "[":
-                    isOpen = true;
-                    break;
-                case "(":
-                    isOpen = true;
-                    break;
-                default:
-                    break;
-            }
-            return isOpen;
-        }
-        private bool isCloseKey(string key)
-        {
-            var isOpen = false;
-            switch (key)
-            {
-                case "}":
-                    isOpen = true;
-                    break;
-                case "]":
-                    isOpen = true;
-                    break;
-                case ")":
-                    isOpen = true;
-                    break;
-                default:
-                    break;
-            }
-            return isOpen;
         }
 
     }
