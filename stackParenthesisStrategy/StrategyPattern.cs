@@ -11,7 +11,83 @@ namespace stackParenthesisStrategy
         public abstract bool isBalancedExpressionInterface(string expression);
     }
 
-    public class HmoriLogicStrategy: LogicStrategy
+    public abstract class FirstLogicStrategy : LogicStrategy
+    {
+        public bool isCoupleComparisson(string girlfriend, string boyfriend)
+        {
+            var isCouple = false;
+            switch (girlfriend)
+            {
+                case "{":
+                    if (boyfriend == "}")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "[":
+                    if (boyfriend == "]")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                case "(":
+                    if (boyfriend == ")")
+                    {
+                        isCouple = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return isCouple;
+        }
+
+        public bool isOpenKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "{":
+                    isOpen = true;
+                    break;
+                case "[":
+                    isOpen = true;
+                    break;
+                case "(":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
+        }
+        public bool isCloseKey(string key)
+        {
+            var isOpen = false;
+            switch (key)
+            {
+                case "}":
+                    isOpen = true;
+                    break;
+                case "]":
+                    isOpen = true;
+                    break;
+                case ")":
+                    isOpen = true;
+                    break;
+                default:
+                    break;
+            }
+            return isOpen;
+        }
+
+        public override bool isBalancedExpressionInterface(string expression)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class HmoriLogicStrategy : FirstLogicStrategy
     {
         public override bool isBalancedExpressionInterface(string expression)
         {
@@ -59,74 +135,6 @@ namespace stackParenthesisStrategy
             else
 
                 return true;
-        }
-
-        private bool isCoupleComparisson(string girlfriend, string boyfriend)
-        {
-            var isCouple = false;
-            switch (girlfriend)
-            {
-                case "{":
-                    if (boyfriend == "}")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                case "[":
-                    if (boyfriend == "]")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                case "(":
-                    if (boyfriend == ")")
-                    {
-                        isCouple = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return isCouple;
-        }
-
-        private bool isOpenKey(string key)
-        {
-            var isOpen = false;
-            switch (key)
-            {
-                case "{":
-                    isOpen = true;
-                    break;
-                case "[":
-                    isOpen = true;
-                    break;
-                case "(":
-                    isOpen = true;
-                    break;
-                default:
-                    break;
-            }
-            return isOpen;
-        }
-        private bool isCloseKey(string key)
-        {
-            var isOpen = false;
-            switch (key)
-            {
-                case "}":
-                    isOpen = true;
-                    break;
-                case "]":
-                    isOpen = true;
-                    break;
-                case ")":
-                    isOpen = true;
-                    break;
-                default:
-                    break;
-            }
-            return isOpen;
         }
     }
 
